@@ -1,9 +1,9 @@
---- alpine-0.9999/imap/src/osdep/unix/ssl_unix.c~	2007-01-10 02:41:01.000000000 +0100
-+++ alpine-0.9999/imap/src/osdep/unix/ssl_unix.c	2007-11-05 14:48:17.000000000 +0100
-@@ -27,14 +27,14 @@
-  */
+--- ./imap/src/osdep/unix/ssl_unix.c.org	2010-10-02 10:37:57.000000000 +0200
++++ ./imap/src/osdep/unix/ssl_unix.c	2011-05-12 16:42:14.772573334 +0200
+@@ -28,14 +28,14 @@
  
  #define crypt ssl_private_crypt
+ #define STRING ssl_private_STRING
 -#include <x509v3.h>
 -#include <ssl.h>
 -#include <err.h>
@@ -21,5 +21,5 @@
 +#include <openssl/crypto.h>
 +#include <openssl/rand.h>
  #undef crypt
+ #undef STRING
  
- #define SSLBUFLEN 8192

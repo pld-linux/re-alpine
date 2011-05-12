@@ -7,7 +7,7 @@ Summary:	The continuation of the Alpine email client from University of Washingt
 Summary(pl.UTF-8):	Kontynuacja klienta pocztowego Alpine z Uniwersytetu w Waszyngtonie
 Name:		re-alpine
 Version:	2.02
-Release:	0.1
+Release:	0.2
 License:	Apache v2.0
 Group:		Applications/Mail
 # Main site:
@@ -123,7 +123,7 @@ ajuda de acordo com o contexto está disponível.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#patch5 -p1
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 
@@ -170,7 +170,6 @@ install %{SOURCE2} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE3} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 ln -s re-alpine $RPM_BUILD_ROOT%{_bindir}/pine
-ln -s re-alpine $RPM_BUILD_ROOT%{_bindir}/alpine
 
 $RPM_BUILD_ROOT%{_bindir}/alpine -conf > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/alpine.conf
 cat <<'EOF' > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/alpine.conf.fixed
@@ -195,11 +194,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/alpine.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/alpine.conf.fixed
-%attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_bindir}/alpine
 %attr(755,root,root) %{_bindir}/pine
 %attr(755,root,root) %{_bindir}/rpload
 %attr(755,root,root) %{_bindir}/rpdump
-%{_mandir}/man1/%{name}.1*
+%{_mandir}/man1/alpine.1*
 %{_mandir}/man1/rpload.1*
 %{_mandir}/man1/rpdump.1*
 %{_desktopdir}/%{name}.desktop
