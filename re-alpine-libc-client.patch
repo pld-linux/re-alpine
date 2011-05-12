@@ -1,0 +1,43 @@
+--- alpine-0.9999/imap/src/osdep/unix/unix.c~	2007-08-31 02:50:06.000000000 +0200
++++ alpine-0.9999/imap/src/osdep/unix/unix.c	2007-11-05 14:40:33.000000000 +0100
+@@ -329,7 +329,7 @@
+   int i,fd;
+   time_t ti = time (0);
+   if (!(s = dummy_file (mbx,mailbox))) {
+-    sprintf (tmp,"Can't create %.80s: invalid name",mailbox);
++    snprintf (tmp,MAILTMPLEN,"Can't create %.80s: invalid name",mailbox);
+     MM_LOG (tmp,ERROR);
+   }
+ 				/* create underlying file */
+@@ -339,25 +339,25 @@
+ 	mail_parameters (NIL,GET_USERHASNOLIFE,NIL)) ret = T;
+     else if ((fd = open (mbx,O_WRONLY,
+ 		    (long) mail_parameters (NIL,GET_MBXPROTECTION,NIL))) < 0) {
+-      sprintf (tmp,"Can't reopen mailbox node %.80s: %s",mbx,strerror (errno));
++      snprintf (tmp,MAILTMPLEN,"Can't reopen mailbox node %.80s: %s",mbx,strerror (errno));
+       MM_LOG (tmp,ERROR);
+       unlink (mbx);		/* delete the file */
+     }
+     else {			/* initialize header */
+       memset (tmp,'\0',MAILTMPLEN);
+-      sprintf (tmp,"From %s %sDate: ",pseudo_from,ctime (&ti));
++      snprintf (tmp,MAILTMPLEN,"From %s %sDate: ",pseudo_from,ctime (&ti));
+       rfc822_fixed_date (s = tmp + strlen (tmp));
+ 				/* write the pseudo-header */
+-      sprintf (s += strlen (s),
++      snprintf (s += strlen (s),MAILTMPLEN,
+ 	       "\nFrom: %s <%s@%s>\nSubject: %s\nX-IMAP: %010lu 0000000000",
+ 	       pseudo_name,pseudo_from,mylocalhost (),pseudo_subject,
+ 	       (unsigned long) ti);
+       for (i = 0; i < NUSERFLAGS; ++i) if (default_user_flag (i))
+-	sprintf (s += strlen (s)," %s",default_user_flag (i));
+-      sprintf (s += strlen (s),"\nStatus: RO\n\n%s\n\n",pseudo_msg);
++	snprintf (s += strlen (s),MAILTMPLEN," %s",default_user_flag (i));
++      snprintf (s += strlen (s),MAILTMPLEN,"\nStatus: RO\n\n%s\n\n",pseudo_msg);
+       if (write (fd,tmp,strlen (tmp)) > 0) ret = T;
+       else {
+-	sprintf (tmp,"Can't initialize mailbox node %.80s: %s",mbx,
++	snprintf (tmp,MAILTMPLEN,"Can't initialize mailbox node %.80s: %s",mbx,
+ 		 strerror (errno));
+ 	MM_LOG (tmp,ERROR);
+ 	unlink (mbx);		/* delete the file */

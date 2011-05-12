@@ -1,0 +1,14 @@
+--- ./pith/mailindx.c.org	2007-09-06 18:18:49.000000000 +0000
++++ ./pith/mailindx.c	2007-09-07 11:49:13.000000000 +0000
+@@ -147,9 +147,9 @@
+ 	static INDEX_COL_S answer_default[] = {
+ 	    {iStatus, Fixed, 3},
+ 	    {iMessNo, WeCalculate},
+-	    {iSDateTime24, WeCalculate},
++	    {iSDateTimeIso24, WeCalculate},
+ 	    {iFromTo, Percent, 33}, /* percent of rest */
+-	    {iSizeNarrow, WeCalculate},
++	    {iKSize, WeCalculate},
+ 	    {iSubjKey, Percent, 67},
+ 	    {iNothing}
+ 	};

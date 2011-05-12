@@ -1,0 +1,24 @@
+--- alpine-0.9999/imap/src/osdep/unix/env_unix.c~	2007-11-05 14:26:20.000000000 +0100
++++ alpine-0.9999/imap/src/osdep/unix/env_unix.c	2007-11-05 14:50:21.000000000 +0100
+@@ -1215,20 +1215,7 @@
+     }
+ 
+     MM_NOCRITICAL (NIL);	/* no longer critical */
+-				/* find directory/file delimiter */
+-    if (s = strrchr (base->lock,'/')) {
+-      *s = '\0';		/* tie off at directory */
+-      sprintf(tmp,		/* generate default message */
+-	      "Mailbox vulnerable - directory %.80s must have 1777 protection",
+-	      base->lock);
+-				/* definitely not 1777 if can't stat */
+-      mask = stat (base->lock,&sb) ? 0 : (sb.st_mode & 1777);
+-      *s = '/';			/* restore lock name */
+-      if (mask != 1777) {	/* default warning if not 1777 */
+-	if (!disableLockWarning) MM_LOG (tmp,WARN);
+-	break;
+-      }
+-    }
++    break;
+   default:
+     sprintf (tmp,"Mailbox vulnerable - error creating %.80s: %s",
+ 	     base->lock,strerror (errno));

@@ -1,0 +1,67 @@
+--- alpine-0.9999/configure.ac.orig	2007-08-22 00:13:29.000000000 +0200
++++ alpine-0.9999/configure.ac	2007-11-05 15:24:56.000000000 +0100
+@@ -765,6 +765,15 @@
+ 
+ dnl CHECK LIBRARIES
+ 
++AC_CHECK_LIB(home_etc, get_home_etc_static,
++	     [
++	      AC_CHECK_HEADER([home_etc.h])
++	      LIBS="$LIBS -lhome_etc"
++	      have_home_etc=yes
++	      AC_DEFINE(HAVE_HOME_ETC,1,[ Define if want to use the HOME-ETC library. ])
++	     ],
++	     AC_MSG_ERROR([could not find libhome_etc]))
++
+ if test x$enable_dmalloc = "xyes" ; then
+   if test "x$with_pthread" = "xyes" ; then
+     dmalloc_lib=dmallocth
+--- alpine-0.9999/alpine/pine-use.c~	2006-09-22 22:06:05.000000000 +0200
++++ alpine-0.9999/alpine/pine-use.c	2007-11-05 15:13:10.000000000 +0100
+@@ -20,6 +20,13 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
++#ifdef HAVE_HOME_ETC
++# include <home_etc.h>
++# define HOMEDIR _HEdir
++#else
++# define HOMEDIR pw->pw_dir
++#endif
++
+ #ifndef MAILSPOOLPCTS
+ #define MAILSPOOLPCTS "/usr/spool/mail/%s"
+ /* #define MAILSPOOLPCTS "/usr/mail/%s" */
+@@ -74,7 +81,7 @@
+         if(strcmp(pw->pw_dir, "/") == 0)
+           continue;
+ 
+-        sprintf(filename, "%s/.pinerc", pw->pw_dir);
++        sprintf(filename, "%s/.pinerc", HOMEDIR);
+         if(stat(filename, &statb) < 0)
+           continue;
+         if(statb.st_mtime + 7 * DAYSEC > now) 
+--- alpine-0.9999/pith/conf.c~	2007-11-02 16:19:06.000000000 +0100
++++ alpine-0.9999/pith/conf.c	2007-11-05 15:12:00.000000000 +0100
+@@ -57,6 +57,12 @@
+ #include "../pico/osdep/mswin.h"
+ #endif
+ 
++#ifdef HAVE_HOME_ETC
++# include <home_etc.h>
++# define HOMEDIR _HEdir
++#else
++# define HOMEDIR ps->home_dir
++#endif
+ 
+ #define	TO_BAIL_THRESHOLD	60
+ 
+@@ -1473,7 +1479,7 @@
+     }
+ 
+     if(!ps->pinerc){
+-      build_path(buf, ps->home_dir, ".pinerc", sizeof(buf));
++      build_path(buf, HOMEDIR, ".pinerc", sizeof(buf));
+       ps->pinerc = cpystr(buf);
+     }
+ 

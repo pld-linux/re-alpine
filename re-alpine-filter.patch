@@ -1,0 +1,25 @@
+--- alpine-0.9999/imap/src/osdep/unix/env_unix.c~	2007-08-16 21:43:35.000000000 +0200
++++ alpine-0.9999/imap/src/osdep/unix/env_unix.c	2007-11-05 14:26:20.000000000 +0100
+@@ -168,18 +168,18 @@
+ 	/* #public - everybody can read/write */
+ static char *publicHome = NIL;	/* public home directory */
+ static long public_protection =	/* default public file protection */
+-  S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH;
++  S_IRUSR|S_IWUSR;
+ 				/* default public directory protection */
+ static long public_dir_protection =
+-  S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IWGRP|S_IXGRP|S_IROTH|S_IWOTH|S_IXOTH;
++  S_IRUSR|S_IWUSR|S_IXUSR;
+ 
+ 	/* #shared/ - owner and group members can read/write */
+ static char *sharedHome = NIL;	/* shared home directory */
+ 				/* default shared file protection */
+-static long shared_protection = S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP;
++static long shared_protection = S_IRUSR|S_IWUSR;
+ 				/* default shared directory protection */
+ static long shared_dir_protection =
+-  S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IWGRP|S_IXGRP;
++  S_IRUSR|S_IWUSR|S_IXUSR;
+ 
+ /* OS bug workarounds - should be avoided at all cost */
+ 

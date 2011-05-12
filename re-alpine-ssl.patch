@@ -1,0 +1,25 @@
+--- alpine-0.9999/imap/src/osdep/unix/ssl_unix.c~	2007-01-10 02:41:01.000000000 +0100
++++ alpine-0.9999/imap/src/osdep/unix/ssl_unix.c	2007-11-05 14:48:17.000000000 +0100
+@@ -27,14 +27,14 @@
+  */
+ 
+ #define crypt ssl_private_crypt
+-#include <x509v3.h>
+-#include <ssl.h>
+-#include <err.h>
+-#include <pem.h>
+-#include <buffer.h>
+-#include <bio.h>
+-#include <crypto.h>
+-#include <rand.h>
++#include <openssl/x509v3.h>
++#include <openssl/ssl.h>
++#include <openssl/err.h>
++#include <openssl/pem.h>
++#include <openssl/buffer.h>
++#include <openssl/bio.h>
++#include <openssl/crypto.h>
++#include <openssl/rand.h>
+ #undef crypt
+ 
+ #define SSLBUFLEN 8192

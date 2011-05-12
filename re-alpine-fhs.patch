@@ -1,0 +1,21 @@
+diff -Nru pine4.30/imap/src/osdep/unix/Makefile pine4.30.new/imap/src/osdep/unix/Makefile
+--- pine4.30/imap/src/osdep/unix/Makefile	Sun Nov  5 20:10:40 2000
++++ pine4.30.new/imap/src/osdep/unix/Makefile	Sun Nov  5 20:14:00 2000
+@@ -392,7 +392,7 @@
+ 	@echo in the C library, you must use slx, sl4, or sl5 instead!
+ 	$(BUILD) `$(CAT) SPECIALS` OS=$@ \
+ 	 SIGTYPE=psx CRXTYPE=nfs \
+-	 SPOOLDIR=/var/spool \
++	 SPOOLDIR=/var/ \
+ 	 ACTIVEFILE=/var/lib/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+ 	 BASECFLAGS="$(OPTIMIZE) -DNFSKLUDGE" \
+@@ -556,7 +556,7 @@
+ 	@echo If you want libc4 versions you must use sl4 instead!
+ 	$(BUILD) `$(CAT) SPECIALS` OS=$@ \
+ 	 SIGTYPE=psx CHECKPW=psx CRXTYPE=nfs \
+-	 SPOOLDIR=/var/spool \
++	 SPOOLDIR=/var \
+ 	 ACTIVEFILE=/var/lib/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+ 	 BASECFLAGS="$(OPTIMIZE) -DNFSKLUDGE" \
